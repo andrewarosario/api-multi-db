@@ -74,6 +74,11 @@ class Postgres extends ICrud {
         return result[0];
     }
 
+    async delete(id) {
+        const query = id ? { id } : {};
+        return this._herois.destroy({ where: query });
+    }
+
     async read(item = {}) {
         return await this._herois.findAll({ where: item, raw: true });
     }

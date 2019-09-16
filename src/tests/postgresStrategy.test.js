@@ -11,6 +11,7 @@ describe('Postgres Strategy', function() {
 
     this.beforeAll(async function() {
         await context.connect();
+        await context.delete();
         await context.create(MOCK_HEROI_ATUALIZAR);
     });
 
@@ -39,6 +40,12 @@ describe('Postgres Strategy', function() {
         };
         const result = await context.updateAndReturn(itemAtualizar.id, novoItem);
         assert.deepEqual(result.nome, novoItem.nome);
+    });
+
+    it('remover por id', async function() {
+        const [item] = await context.read({});
+        const result = await context.delete(item.id);
+        assert.deepEqual(result, 1);
     });
 
 });
