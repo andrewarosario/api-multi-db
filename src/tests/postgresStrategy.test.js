@@ -4,12 +4,14 @@ const Context = require('../db/strategies/base/contextStrategy');
 
 const context = new Context(new Postgres());
 const MOCK_HEROI_CADASTRAR = { nome: 'Gaviao Negro', poder: 'Flechas' };
+const MOCK_HEROI_ATUALIZAR = { nome: 'Batman', poder: 'Dinheiro' };
 
 describe('Postgres Strategy', function() {
     this.timeout(Infinity);
 
     this.beforeAll(async function() {
         await context.connect();
+        await context.create(MOCK_HEROI_ATUALIZAR);
     });
 
     it('Postgres Connection', async function() {
@@ -28,4 +30,15 @@ describe('Postgres Strategy', function() {
         delete result.id;
         assert.deepEqual(result, MOCK_HEROI_CADASTRAR);
     });
+
+    it('atualizar', async function() {
+        const [ itemAtualizar ] = await context.read({ nome: MOCK_HEROI_ATUALIZAR.nome });
+        const novoItem = {
+            ...MOCK_HEROI_ATUALIZAR,
+            nome: 'Mulher Maravilha'
+        };
+        const result = await context.updateAndReturn(itemAtualizar.id, novoItem);
+        assert.deepEqual(result.nome, novoItem.nome);
+    });
+
 });

@@ -18,6 +18,10 @@ class ICrud {
         throw new NotImplementedException();
     }
 
+    updateAndReturn(id, item) {
+        throw new NotImplementedException();
+    }
+
     delete(id) {
         throw new NotImplementedException();
     }
