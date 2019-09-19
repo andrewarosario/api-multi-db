@@ -28,6 +28,7 @@ class MongoDB extends ICrud {
         connection.once('open', () => console.log('database rodando!!'));
 
         this._driver = connection;
+        this.defineModel();
     }
 
     defineModel() {
@@ -61,10 +62,7 @@ class MongoDB extends ICrud {
     }
 
     async create(item) {
-        const result = await model.create({
-            nome: 'Batman',
-            poder: 'Dinheiro'
-        }); 
+        return await this._herois.create(item);
     }
 }
 
