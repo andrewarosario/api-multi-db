@@ -70,6 +70,10 @@ class MongoDB extends ICrud {
             .skip(skip)
             .limit(limit);
     }
+
+    async update(id, item) {
+        return this._herois.updateOne({_id: id}, { $set: item });
+    }
 }
 
 module.exports = MongoDB;
